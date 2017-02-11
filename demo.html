@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="zh">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>js正则表达式库-Regs.js</title>
+<style>
+body{
+    font-size: 14px;
+}
+input{
+    width: 260px;
+    height: 30px;
+    text-indent: 10px;
+    border:1px solid #ccc;
+}
+.btns{
+    margin-top: 20px;
+}
+.btns h2{
+    margin-bottom: 6px;
+}
+.btns>i{
+    display: block;
+    padding:6px 10px;
+    margin: 2px 6px 0 0;
+    font-style: normal;
+    background-color:#f5f5f5;
+    cursor: pointer;
+    border:1px solid #ccc;
+}
+.btns>i:hover{
+    background-color: #e8e8e8;
+}
+.info{
+    margin-left: 10px;
+    color: #999;
+}
+</style>
+</head>
+<body>
+
+<div class="main">
+    <input type="text" placeholder="亲自验证..."><span class="info">数字：/^[0-9]*$/</span>
+
+    <div class="btns">
+        <h2>数字：</h2>
+        <i key='num'>数字 /^[0-9]*$/</i>
+        
+        <h2>字符：</h2>
+        <i key='en'>字母 /^[a-zA-Z]+$/</i>
+        <i key='cn'>汉字 /^[\u4e00-\u9fa5]{0,}$/</i>
+        <i key='numEn'>英文、数字 /^[A-Za-z0-9]+$/</i>
+        <i key='numEn_'>数字、字母、下划线 /^[\u4E00-\u9FA5A-Za-z0-9_]+$/</i>
+        <i key='numEnNum_'>数字、字母、下划线、汉字  /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/</i>
+
+        <h2>其它：</h2>
+        <i key='email'>Email邮箱 /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/</i>
+        <i key='qq'>QQ号 /[1-9][0-9]{4,}/</i>
+    
+    </div>
+</div>
+
+<script src="./Regs.js"></script>
+<script>
+(function() {
+    /*
+    * 以下代码用于演示，可以忽视
+    */
+    var input = document.querySelectorAll('input')[0],
+        info = document.querySelectorAll(".info")[0],
+        btns = document.querySelectorAll('.btns>i'),
+        currentReg = Regs.num; //默认值
+
+    //change reg
+    for (var i = 0; i < btns.length; i++) {
+        (function(j) {
+            btns[j].onclick = function() {
+                var key = btns[j].getAttribute("key"),
+                    name = btns[j].innerHTML;
+                currentReg = Regs[key];
+                info.innerHTML = name;
+                input.value = '';
+                input.style.backgroundColor = '';
+            }
+        })(i)
+    }
+
+    // match
+    input.addEventListener("input", function() {
+        if(!this.value){
+           this.style.backgroundColor='';
+           return; 
+        } 
+        if (new RegExp(currentReg).test(this.value)) {
+            this.style.backgroundColor = "green";
+        } else {
+            this.style.backgroundColor = "red";
+        }
+    })
+
+}())
+</script>   
+</body>
+</html>		
