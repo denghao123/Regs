@@ -10,14 +10,37 @@
 body{
     font-size: 14px;
 }
+i,em,b{
+    font-style: normal;
+    font-weight: normal;
+}
+.form{
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    padding: 20px 20px 20px 10px;
+    background-color: white;
+    border-bottom:1px solid #e5e5e5;
+    box-shadow: 0 2px 6px #e8e8e8;
+}
 input{
     width: 260px;
     height: 30px;
     text-indent: 10px;
     border:1px solid #ccc;
 }
+.version{
+    float: right;
+    margin-right: 60px;
+    font-size:36px;
+    color: #ccc;
+}
+.input-reg{
+    width: 400px;
+}
 .btns{
-    margin-top: 20px;
+    margin-top: 100px;
 }
 .btns h2{
     margin-bottom: 6px;
@@ -26,10 +49,13 @@ input{
     display: block;
     padding:6px 10px;
     margin: 2px 6px 0 0;
-    font-style: normal;
     background-color:#f5f5f5;
     cursor: pointer;
     border:1px solid #ccc;
+}
+.btns>i b{
+    color: #999;
+    margin-left: 10px;
 }
 .btns>i:hover{
     background-color: #e8e8e8;
@@ -43,22 +69,55 @@ input{
 <body>
 
 <div class="main">
-    <input type="text" placeholder="亲自验证..."><span class="info">数字：/^[0-9]*$/</span>
+    <div class="form">
+        <input class="input-str" type="text" placeholder="输入验证字符...">
+        <span>验证规则：</span>
+        <input class="input-reg" id="inputReg" type="text" placeholder="输入正则表达式" value="/^[0-9]*$/">
+        <span class="info">正整数 /^[0-9]*$/</span>
+        <span class="version">正则表达式库_Regs.js</span>
+    </div>
 
     <div class="btns">
         <h2>数字：</h2>
-        <i key='num'>数字 /^[0-9]*$/</i>
+        <i key='posiInt'>正整数 <b>/^[1-9]\d*$/</b></i>
+        <i key='posiInt0'>0或正整数 <b>/^(0|[1-9][0-9]*)$/</b></i>
+        <i key='numLen2'>2位非负整数 <b>/^[0-9]{2}$/</b></i>
+        <i key='numLen2or3'>2-3位的数字 <b>/^\d{1,3}$/</b></i>
+        <i key='posiFloat2'>2非零开头的最多带两位小数的正数 <b>/^([1-9][0-9]*)+(.[0-9]{1,2})?$/</b></i>
+        <i key='float1or2'>带1-2位小数的正数或负数 <b>/^(\-)?\d+(\.\d{1,2})?$/</b></i>
+        <i key='negativeInt'>非零的负整数 <b>/^-[1-9]\d*$/</b></i>
+        <i key='negativeInt0'>非正整数 <b>/^-[1-9]\d*|0$/</b></i>
+        <i key='posifloat0'>非负浮点数 <b>/^\d+(\.\d+)?$</b></i>
+        <i key='negativeFloat0'>非正浮点数 <b>/^((-\d+(\.\d+)?)|(0+(\.0+)?))$/</b></i>
+        <i key='negativeFloat'>负浮点数 <b>/^-([1-9]\d*\.\d*|0\.\d*[1-9]\d*)$/</b></i>
+        <i key='posiFloat'>正浮点数 <b>/^[1-9]\d*\.\d*|0\.\d*[1-9]\d*$/</b></i>
+        <i key='float'>浮点数 <b>/^(-?\d+)(\.\d+)?$/</b></i>
+
         
         <h2>字符：</h2>
-        <i key='en'>字母 /^[a-zA-Z]+$/</i>
-        <i key='cn'>汉字 /^[\u4e00-\u9fa5]{0,}$/</i>
-        <i key='numEn'>英文、数字 /^[A-Za-z0-9]+$/</i>
-        <i key='numEn_'>数字、字母、下划线 /^[\u4E00-\u9FA5A-Za-z0-9_]+$/</i>
-        <i key='numEnNum_'>数字、字母、下划线、汉字  /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/</i>
-
-        <h2>其它：</h2>
-        <i key='email'>Email邮箱 /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/</i>
-        <i key='qq'>QQ号 /[1-9][0-9]{4,}/</i>
+        <i key='numEn'>英文和数字 <b>/^[A-Za-z0-9]+$/</b></i>
+        <i key='en4to16'>长度为4-16的所有字符 <b>/^.{4,16}$/</b></i>
+        <i key='En'>英文字母 <b>/^[A-Za-z]+$/</b></i>
+        <i key='EN'>大写英文字母 <b>/^[A-Z]+$/</b></i>
+        <i key='en'>小写英文和数字 <b>/^[a-z]+$/</b></i>
+        <i key='numEn_'>数字、字母、下划线 <b>/^\w+$/</b></i>
+        <i key='numEnCn_'>中文、英文、数字、下划线 <b>/^[\u4E00-\u9FA5A-Za-z0-9_]+$/</b></i>
+        <i key='numEnCn'>中文、英文、数字 <b>/^[\u4E00-\u9FA5A-Za-z0-9]+$/</b></i>
+        <i key='illegal'>含有^%&',;=?$\”等字符 <b>/[^%&',;=?$\x22]+/</b></i>
+        <i key='email'>邮箱 <b>/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/</b></i>
+        <i key='url'>url地址</i>
+        <i key='mobile'>手机号码 <b>/^1[34578]\d{9}$/</b></i>
+        <i key='telephone'>座机号码 <b>/^(($\d{3,4}-)|\d{3.4}-)?\d{7,8}$/</b></i>
+        <i key='idCard'>身份证号 <b>/^([0-9]){7,18}(x|X)?$/</b></i>
+        <i key='date'>12个月 <b>/^\d{4}-\d{1,2}-\d{1,2}/</b></i>
+        <i key='day'>月份31天 <b>/^((0?[1-9])|((1|2)[0-9])|30|31)$/</b></i>
+        <i key='xml'>xml <b>/^([a-zA-Z]+-?)+[a-zA-Z0-9]+\\.[x|X][m|M][l|L]$/</b></i>
+        <i key='html'>html标签</i>
+        <i key='trim'>首尾空白字符 <b>/^\s*|\s*$/</b></i>
+        <i key='qq'>qq <b>/[1-9][0-9]{4,}</b></i>
+        <i key='postcode'>邮编 <b>/[1-9]\d{5}(?!\d)/</b></i>
+        <i key='ip'>ip <b>/\d+\.\d+\.\d+\.\d+/</b></i>
+       
     
     </div>
 </div>
@@ -72,9 +131,10 @@ input{
     var input = document.querySelectorAll('input')[0],
         info = document.querySelectorAll(".info")[0],
         btns = document.querySelectorAll('.btns>i'),
-        currentReg = Regs.num; //默认值
+        inputReg=document.querySelectorAll('#inputReg')[0],
+        currentReg = Regs.posiInt; //默认值
 
-    //change reg
+    //change
     for (var i = 0; i < btns.length; i++) {
         (function(j) {
             btns[j].onclick = function() {
@@ -82,8 +142,13 @@ input{
                     name = btns[j].innerHTML;
                 currentReg = Regs[key];
                 info.innerHTML = name;
+                inputReg.value=currentReg;
                 input.value = '';
                 input.style.backgroundColor = '';
+                btns.forEach(function(val,index){
+                    btns[index].style.backgroundColor="#f5f5f5";
+                })
+                btns[j].style.backgroundColor="#ccc";
             }
         })(i)
     }
@@ -99,6 +164,14 @@ input{
         } else {
             this.style.backgroundColor = "red";
         }
+    })
+
+    //modify RegEx
+    inputReg.addEventListener("input", function() {
+        if(!this.value){
+           return; 
+        } 
+        currentReg=eval(this.value);
     })
 
 }())
