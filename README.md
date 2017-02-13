@@ -3,7 +3,7 @@
 
 
 - 演示地址：[demo](http://denghao.me/special/regs/demo.html)
-- 项目地址：[gitHub](http://denghao.me/special/regs/demo.html)
+
 
 ###数据结构：
 ![](http://denghao.me/wp-content/uploads/2017/02/regsJsList.jpg)
