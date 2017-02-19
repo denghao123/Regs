@@ -148,9 +148,9 @@ input{
                 inputReg.value=currentReg;
                 input.value = '';
                 input.style.backgroundColor = '';
-                btns.forEach(function(val,index){
-                    btns[index].style.backgroundColor="#f5f5f5";
-                })
+                for (var k = 0; k < btns.length; k++) {
+                	btns[k].style.backgroundColor="#f5f5f5";
+                }
                 btns[j].style.backgroundColor="#ccc";
             }
         })(i)
